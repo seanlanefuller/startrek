@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<!--
+HTML wrapper by Sean Lane Fuller Copyright (C) 2025
+-->
+
+<head>
+    <title>Super Star Trek: 24th Century Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="trek.js"></script>
+    <script src="sounds.js"></script>
+    <script>
+        // Initialize Sound Manager globally
+        window.soundManager = new SoundManager();
+
+        // Helper to pipe button clicks to the game input
+        function sendCmd(cmd) {
+            window.soundManager.beep();
+            var inputField = document.getElementById('command_input');
+            // If the game is just waiting for a command, send it directly
+            // We use the existing usercommand logic
+            usercommand2(cmd);
+            // Keep focus on input for parameters
+            inputField.focus();
+        }
+
+        function handleInputEnter(event) {
+            if (event.key === "Enter") {
+                window.soundManager.beep();
+                var inputField = document.getElementById('command_input');
+                usercommand2(inputField.value);
+                inputField.value = "";
+            }
+        }
+    </script>
+</head>
+
+<body onload="main()">
+    <div id="main-interface">
+        <header>
+            <h1>USS Enterprise</h1>
+            <div class="stardate">NCC-1701</div>
+        </header>
+
+        <nav id="sidebar">
+            <div class="control-group">
+                <h3>Helm</h3>
+                <button onclick="sendCmd('nav')">Navigation</button>
+                <button onclick="sendCmd('srs')">Short Range</button>
+                <button onclick="sendCmd('lrs')">Long Range</button>
+            </div>
+
+            <div class="control-group">
+                <h3>Tactical</h3>
+                <button class="tactical" onclick="sendCmd('pha')">Phasers</button>
+                <button class="tactical" onclick="sendCmd('tor')">Torpedoes</button>
+                <button class="tactical" onclick="sendCmd('she')">Shields</button>
+            </div>
+
+            <div class="control-group">
+                <h3>Ops</h3>
+                <button class="science" onclick="sendCmd('dam')">Damage</button>
+                <button class="science" onclick="sendCmd('com')">Computer</button>
+                <button class="science" onclick="sendCmd('help')">Help</button>
+            </div>
+
+            <div
+                style="flex-grow: 1; background: var(--lcars-tan); width: 20px; align-self: flex-end; border-radius: 0 0 0 20px;">
+            </div>
+        </nav>
+
+        <div id="output_area">
+            <!-- Game Output Goes Here -->
+        </div>
+
+        <div class="input-console">
+            <span
+                style="color: var(--lcars-orange); font-weight: bold; font-family: var(--font-header);">COMMAND:</span>
+            <input type="text" id="command_input" onkeypress="handleInputEnter(event)" autofocus>
+            <button class="engage" onclick="handleInputEnter({key: 'Enter'})">ENGAGE</button>
+        </div>
+    </div>
+</body>
+
+</html>
