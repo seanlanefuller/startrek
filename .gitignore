@@ -1,0 +1,12 @@
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+node_modules/
